@@ -12,7 +12,7 @@ defmodule Kvstore do
     case :gen_tcp.listen(port, [:binary, reuseaddr: true, active: false]) do
       {:ok, sock} ->
         Logger.info("listening on port: #{port}")
-        :ets.new(:kv_store, [:set, :public, :named_table])
+        :ets.new(:kv_store, [:set, :public, :named_table, write_concurrency: true, read_concurrency: true])
         accept(sock)
 
       {:error, reason} ->
